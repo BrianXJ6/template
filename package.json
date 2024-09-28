@@ -9,7 +9,6 @@
         "@inertiajs/vue3": "^1.0.14",
         "@vitejs/plugin-vue": "^5.0.0",
         "@vue/server-renderer": "^3.3.13",
-        "autoprefixer": "^10.4.16",
         "axios": "^1.7.4",
         "laravel-vite-plugin": "^1.0",
         "vite": "^5.0",
