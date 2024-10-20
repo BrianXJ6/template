@@ -1,66 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://github.com/BrianXJ6/template"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/BrianXJ6/template"><img src="https://codecov.io/gh/BrianXJ6/template/branch/develop/graph/badge.svg" alt="Coverage Status"></a>
+<a href="https://github.com/BrianXJ6/template/blob/develop/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
 </p>
 
-## About Laravel
+# Project Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The first step is to clone the repository with the command below:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```shell
+git clone https://github.com/BrianXJ6/template.git
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+After cloning the repository, navigate to its dependencies and in the root you'll find a file called `.env.example`, Make a copy of this file named `.env`, this is the main configuration file of the application.
 
-## Learning Laravel
+> If you wish, you can create several files for different environments such as testing, production, etc., just copy the example and change the suffix.<br> Example: `.env.testing` for a testing environment, `.env.production` for a production environment, and so on...
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+For convenience, below is a simple example command to copy your environment file.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```shell
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Now let's install all application packages and dependencies with Composer. Run the command below:
 
-## Laravel Sponsors
+```shell
+composer update
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+With Composer installed, we now have access to Laravel Artisan commands, and before anything else, we need to generate a key for our application. See the command below:
 
-### Premium Partners
+```shell
+php artisan key:generate
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Now you have 2 paths to follow:
 
-## Contributing
+1. Take advantage of all the facilities of Laravel Sail to have a fully Dockerized environment;
+2. Run the application service with a local server without the need to start a Docker container.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+As usual, the best and easiest option is to use Laravel Sail (Docker), as it will provide you with a fully configured environment with all the necessary services for the proper functioning of the application. However, nothing prevents you from running only the services that are convenient for you separately and starting your server locally if you already have everything ready.
 
-## Code of Conduct
+Currently, the application uses **5 services**, of which **2 are mandatory** and 3 optional in a development environment. The list of services is as follows:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Mandatory Services:
 
-## Security Vulnerabilities
+- MySQL
+- Redis
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Optional Services:
 
-## License
+- Minio
+- Soketi
+- Application (Container com imagem do PHP)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Docker
+
+As mentioned earlier, it is recommended to use Laravel Sail (Docker) to facilitate all the work. It is optional but highly recommended to create an `alias` for Sail commands. In the root of the project, run:
+
+```shell
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+```
+
+> You can also create a permanent alias pointing to the `vendor/` directory.
+
+Now we can execute any Sail command more easily, just run `sail {command}` and watch the magic happen.
+
+> Remember that Sail will only be available after running Composer!
+
+Without the alias, to use Sail you would need to specify the entire path to the executor, like this: `./vendor/bin/sail {command}`, which can become tedious over time.
+
+Finally, we can bring up all services in a container with the command below:
+
+```shell
+sail up -d
+```
+
+> If you want to force a new build of your container, just add the `--build` flag.
+
+Now you can enjoy all the ease of Sail and execute Artisan commands within your application container without needing to access it. For example, to generate a new application key, just run:
+
+```shell
+sail a key:generate
+```
+
+The container is already prepared to create an initial build and run the migrations, so it will not be necessary to perform these steps manually. Other services like queues and SSR are also automatically started with the help of the supervisor.
+
+For more information, see: [Laravel Sail](https://laravel.com/docs/11.x/sail)
+
+To take down all services, just run the command below:
+
+```shell
+sail down
+```
+
+> If you want to remove all generated volumes, use the `-v` flag at the end.
+
+## Local Server
+
+Now let's see how to use it without Docker...<br>
+For convenience, much of the heavy lifting is already done. Review the `docker-compose.yml` file; with it, you can bring up only the MySQL and Redis services like this:
+
+```shell
+docker compose up -d mysql redis
+```
+
+> If you want to include more services, just add the name of the desired service at the end.
+
+With the services running, let's run the migrations and populate our database:
+
+```shell
+php artisan migrate --seed
+```
+
+It will also be necessary to download the NPM packages:
+
+```shell
+npm i
+```
+
+And with the help of Vite, compile in runtime working with auto reload for our frontend:
+
+```shell
+npm run dev
+```
+
+> If you want a build for production, run: `npm run build`. Remember that the `run dev` command will occupy your terminal, so you will need to use a new tab.
+
+After that, just run a local PHP server on your machine with the command below:
+
+```shell
+php -S 0.0.0.0:80 -t public
+```
+
+> Don't forget to configure your `.env` file so that connections with the services can work correctly.
+
+Use Artisan commands to perform other functions like starting queue jobs, cache cleaning, etc.
