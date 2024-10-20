@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="Taylor Otwell"
 
-ARG WWWGROUP
+ARG WWWGROUP=1000
 ARG NODE_VERSION=20
 ARG MYSQL_CLIENT="mysql-client"
 
@@ -10,8 +10,6 @@ WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=America/Recife
-ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
-ENV SUPERVISOR_PHP_USER="root"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -45,9 +43,11 @@ RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
 COPY start-container /usr/local/bin/start-container
+COPY init /usr/local/bin/init
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.3/cli/conf.d/99-sail.ini
+COPY php.ini /etc/php/8.3/cli/conf.d/99-application.ini
 RUN chmod +x /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/init
 
 EXPOSE 80/tcp
 

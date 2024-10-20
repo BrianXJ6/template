@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+TIMEOUT=30
+
+# Function to handle the NPM execution process
+npm_install() {
+    if [ "$1" == "timeout" ]; then
+        timeout $TIMEOUT gosu $WWWUSER npm i &
+        BUILD_PID=$!
+    else
+        gosu $WWWUSER npm i &
+        BUILD_PID=$!
+    fi
+
+    while kill -0 $BUILD_PID 2>/dev/null; do
+        echo "NPM is running, this process may take a while, please wait..."
+        sleep 10
+    done
+    wait $BUILD_PID
+
+    if [ $? -eq 0 ]; then
+        echo ">>>>>>>>>> Packages via NPM installed successfully!!!"
+    else
+        npm_install
+    fi
+
+    return $?
+}
+
+# Preparing the application...
+if [ ! -d /var/www/html/node_modules ]; then
+    echo ">>>>>>>>>> Executing NPM to download packages:"
+    npm_install "timeout"
+fi
+
+if [ ! -d /var/www/html/public/build ]; then
+    echo ">>>>>>>>>> Executing the initial build of the application:"
+    gosu $WWWUSER npm run build
+    echo ">>>>>>>>>> Application build completed successfully!!!"
+fi
+
+# Preparing database...
+echo ">>>>>>>>>> Preparing database:"
+until mysqladmin ping --host=$MYSQL_HOST --silent; do
+    echo "MySQL is unavailable, please wait..."
+    sleep 3
+done
+
+echo ">>>>>>>>>> Great, the MySQL service is ready!!! ;D"
+php artisan migrate:status | grep -q 'ERROR'
+
+# Running migrations if necessary...
+if [ $? -eq 0 ]; then
+    echo ">>>>>>>>>> Running migrations and populating databases:"
+    php artisan migrate --seed
+fi
+
+exec echo ">>>>>>>>>> Initialization process completed successfully!!!"
