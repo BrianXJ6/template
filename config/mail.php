@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Mailer
@@ -13,7 +12,6 @@ return [
     | "mailers" array. Examples of each type of mailer are provided.
     |
     */
-
     'default' => env('MAIL_MAILER', 'log'),
 
     /*
@@ -30,13 +28,10 @@ return [
     | your mailers below. You may also add additional mailers if needed.
     |
     | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
-    |            "postmark", "resend", "log", "array",
-    |            "failover", "roundrobin"
+    |            "postmark", "resend", "log", "array", "failover", "roundrobin"
     |
     */
-
     'mailers' => [
-
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
@@ -94,7 +89,6 @@ return [
                 'postmark',
             ],
         ],
-
     ],
 
     /*
@@ -107,10 +101,8 @@ return [
     | used globally for all emails that are sent by your application.
     |
     */
-
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
-
 ];
