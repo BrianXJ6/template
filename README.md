@@ -1,3 +1,9 @@
+<p align="center">
+<a href="https://github.com/BrianXJ6/template"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/BrianXJ6/template"><img src="https://codecov.io/gh/BrianXJ6/template/branch/develop/graph/badge.svg" alt="Coverage Status"></a>
+<a href="https://github.com/BrianXJ6/template/blob/develop/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
+</p>
+
 # Project Installation
 
 The first step is to clone the repository with the command below:
