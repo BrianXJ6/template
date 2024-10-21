@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
-import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
+import laravel from "laravel-vite-plugin";
 
 export default defineConfig({
     server: {
@@ -12,6 +12,9 @@ export default defineConfig({
         hmr: {
             host: "localhost",
         },
+    },
+    ssr: {
+        noExternal: ["vuetify"],
     },
     plugins: [
         laravel({
